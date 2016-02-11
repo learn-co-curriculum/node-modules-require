@@ -13,13 +13,13 @@ This lesson will cover how to import and export modules in Node.js, what syntax 
 
 ## Modules
 
-Modules are distinct chunks of logic typically combined by their functionality (by their purpose). For example, if you are building a date picker, you might want to abstract (separate into a module) your date picker logic into a separate component/package/module, because the chances are very high that you'll need more than one date input field: data of birth, date of expiration on a credit/debit card, date of delivery, etc.
+Modules are distinct chunks of logic typically grouped together based on their functionality. For example, if you are building a date picker, you might want to abstract (separate into a module) your date picker logic into a separate component/package/module, because the chances are very high that you'll need more than one date input field: date of birth, date of expiration on a credit/debit card, date of delivery, etc.
 
-Writing modular code is the best practice because the more you can re-use the old code from other parts of the application in a new features and places, the better the overall project will be. There is one tiny problem with browser JavaScript however—it doesn't have built-in modules! That is insane if you think about it. Developers have to use HTML which is another language to include browser JavaScript files. But even then, the dependency management is awful and the `<script>` tags are often blocking the loading of other resources (they are synchronous).
+Writing modular code is the best practice because the more you can re-use the old code from other parts of the application in a new features and places, the better the overall project will be. There is one tiny problem with browser JavaScript. Ist doesn't have built-in modules! That is insane if you think about it. Developers have to use HTML which is another language to include browser JavaScript files. But even then, the dependency management is awful and the `<script>` tags are often blocking the loading of other resources (they are synchronous).
 
 Ingenuity of the JavaScript community led to the invention of various JavaScript-only approaches to modules such as CommonJS, RequireJS, and AMD. Under the hood, these standards and libraries used AJAX (Asynchronous JavaScript and XML) or XHR to fetch other JavaScript libraries/modules. Not ideal, but works better than having to manage 100s of `<script>` tags.
 
-Of course, creators of Node.js new about this issue. They implemented CommonJS notation for the module system. It's very simple and elegant. 
+Of course, creators of Node.js knew about this issue. They implemented CommonJS notation for the module system. It's very simple and elegant. 
 
 ## Syntax for Working with Node Modules
 
@@ -42,13 +42,13 @@ console.log('Tatar ' +
   sayHelloInEnglish())
 ```
 
-The code is in the `hello-monolithic.js` and if you run it with `$ node hello-monolithic.js`, you'll see this:
+The code is in `hello-monolithic.js` and if you run it with `node hello-monolithic.js`, you'll see this:
 
 ```
 Tatar Isänmesez & English Hello
 ```
 
-So far so good? What if you need to re-use the same hellos in multiple places? Let's abstract (separate the monolithic code into two files) into `greetings.js` (module) and `hello.js` (main file).
+So far so good? What if you need to re-use the same hellos in multiple places? Let's abstract that portion into `greetings.js` (module) and `hello.js` (main file).
 
 The code for the `greetings.js` module  uses `module.exports`:
 
@@ -109,7 +109,7 @@ Also, you can import many things, not just JS files:
 * JSON file
 * Folder (really an `index.js` inside of the folder)
 
-You've seen how to import a file in the greetings example, but what about npm and core modules? You just use the name of the module, e.g., for `express` use `require('express')` and for `fs` use `require('fs')`. The difference between core and npm modules is that you need to install the latter with `$ npm install NAME`.
+You've seen how to import a file in the greetings example, but what about npm and core modules? You just use the name of the module, e.g., for `express` use `require('express')` and for `fs` use `require('fs')`. The difference between core and npm modules is that you need to install the latter with `npm install NAME`.
 
 When importing JSON files, you'll get JavaScript/Node object which is convenient. And importing a folder acts as another abstraction. For example, you have 20 utilities files, instead of requiring all 20 in each file, you just include the folder (really an `index.js` which in turn requires and exports the 20 files).
 
