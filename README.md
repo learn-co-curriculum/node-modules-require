@@ -2,7 +2,9 @@
 
 ## Overview
 
-This lesson will cover how to import and export modules in Node.js, what syntax and operators to use and highlight the differences between browser JavaScript and Node when it comes to modules.
+Let's say you're building an online store and you need to incorporate a date picker to deal with more than one date input field (date of birth, date of expiration on a credit card, date of delivery, etc). If you start writing everything in one single file, you end up with a HUGE file with your date picker logic in your shopping cart and other files. Now add to that the fact that you have 10 other team members working on this project... on that SINGLE file!
+
+By writing modular code, you can avoid this problem. This lesson will cover how to import and export modules in Node.js, what syntax and operators to use and highlight the differences between browser JavaScript and Node when it comes to modules.
 
 ## Objectives
 
@@ -50,29 +52,7 @@ Tatar Isänmesez & English Hello
 
 So far so good? What if you need to re-use the same hellos in multiple places? Let's abstract that portion into `greetings.js` (module) and `hello.js` (main file).
 
-The code for the `greetings.js` module  uses `module.exports`:
-
-```
-module.exports.sayHelloInEnglish = function() {
-  return 'Hello'
-}
-
-module.exports.sayHelloInTatar = function() {
-  return 'Isänmesez'
-}
-```
-
-Then in the main file `hello.js`, we import the `greetings.js` with require. Then we invoke the methods like any other functions:
-
-```js
-var greetings = require('./greetings.js')
-
-console.log('Tatar ' +
-  greetings.sayHelloInSwedish() +
-  ' & English ' +
-  greetings.sayHelloInEnglish())
-```
-
+Move the code for the `sayHelloInEnglish` and `sayHelloInTatar` to `greetings.js`. In that file, you'll need to export the logic.
 
 ## Exporting
 
@@ -97,23 +77,72 @@ module.exports = function() {...}
 ```
 
 
+So the code for the `greetings.js` module  uses `module.exports`:
+
+```
+module.exports.sayHelloInEnglish = function() {
+  return 'Hello'
+}
+
+module.exports.sayHelloInTatar = function() {
+  return 'Isänmesez'
+}
+```
+
+But how we use the module in the main file? We need to import the functionality!
+
 ## Importing
 
-So we have the code neatly organized into separate folder and files for re-use and better development scalability, but how can we use those files from other files (I call the importee or main files)? We use `require()` which is another global method.
+So we have the code neatly organized into separate folder and files for re-use and better development scalability, but how can we use those files from other files (I call the importee or main files)? We use `require()` which is another global method:
 
-Also, you can import many things, not just JS files:
+```js
+var module = require('module')
+```
 
-* Node file
-* npm module
-* Core module
-* JSON file
-* Folder (really an `index.js` inside of the folder)
+The value of `module.exports` (in the module) will be returned and assigned to the `module` variable (in the main file). The name can be anything but typically it closely resembles the module names.
 
-You've seen how to import a file in the greetings example, but what about npm and core modules? You just use the name of the module, e.g., for `express` use `require('express')` and for `fs` use `require('fs')`. The difference between core and npm modules is that you need to install the latter with `npm install NAME`.
+Back to our greetings. We have the module. Then, in the main file `hello.js`, we import the `greetings.js` with require. Then we invoke the methods like any other functions:
+
+```js
+var greetings = require('./greetings.js')
+
+console.log('Tatar ' +
+  greetings.sayHelloInSwedish() +
+  ' & English ' +
+  greetings.sayHelloInEnglish())
+```
+
+## Importing More Than a File
+
+We've showed you how to import a Node (.js) file. Conveniently, you can import many things, not just JS files:
+
+* Node file, e.g., `require('./greetings.js')` or `require('./greetings')`
+* npm module, e.g., `require('chai')`
+* Core module, e.g., `require('fs')`
+* JSON file, e.g., `require('./configs.jsoin')`
+* Folder (really an `index.js` inside of the folder), e.g., `require('./routes')`
+
+You've seen how to import a file in the greetings example, but what about npm and core modules? You just use the name of the module, e.g., for `chai` use `require('chai')` and for `fs` use `require('fs')`. The difference between core and npm modules is that you need to install the latter with `$ npm install NAME`.
+
 
 When importing JSON files, you'll get JavaScript/Node object which is convenient. And importing a folder acts as another abstraction. For example, you have 20 utilities files, instead of requiring all 20 in each file, you just include the folder (really an `index.js` which in turn requires and exports the 20 files).
 
-Note: When you import a JavaScript file, Node will execute the code outside of the `module.exports` but not the `module.exports` code.
+## How Exporting Works
+
+Now go back to the module example and add some code outside of the `module.exports`. It will run as soon as we import the module. It will run even if we never invoke any of the greetings. 
+
+In other words, when you import a Node/JavaScript file, Node will execute the code outside of the `module.exports`, but not the `module.exports` code. The `module.exports` needs to be invoked explicitly (if it's a function... it could be an object too). 
+
+Knowing this will help you to add some logic that needs to be executed no matter what or some logic which overwrites a `global` property. For example, this module will make console.logs red as soon as we import it, but it doesn't even have `module.exports`!:
+
+```js
+_log = global.console.log
+global.console.log = function(){
+  var args = arguments
+  args[0] = require('chalk').bold.red('\033[31m' +args[0] + '\x1b[0m')
+  return _log.apply(null, args)
+}
+```
 
 ## Resources
 
