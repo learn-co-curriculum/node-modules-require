@@ -127,7 +127,7 @@ You've seen how to import a file in the greetings example, but what about npm an
 
 When importing JSON files, you'll get JavaScript/Node object which is convenient. And importing a folder acts as another abstraction. For example, you have 20 utilities files, instead of requiring all 20 in each file, you just include the folder (really an `index.js` which in turn requires and exports the 20 files).
 
-## How Exporting Works
+## How Import/Export Works
 
 Now go back to the module example and add some code outside of the `module.exports`. It will run as soon as we import the module. It will run even if we never invoke any of the greetings. 
 
