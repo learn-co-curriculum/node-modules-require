@@ -107,7 +107,7 @@ Back to our greetings. We have the module. Then, in the main file `hello.js`, we
 var greetings = require('./greetings.js')
 
 console.log('Tatar ' +
-  greetings.sayHelloInSwedish() +
+  greetings.sayHelloInTatar() +
   ' & English ' +
   greetings.sayHelloInEnglish())
 ```
