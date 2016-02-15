@@ -23,7 +23,7 @@ Ingenuity of the JavaScript community led to the invention of various JavaScript
 
 Of course, creators of Node.js knew about this issue. They implemented CommonJS notation for the module system. It's very simple and elegant. 
 
-## Syntax for Working with Node Modules
+## Greetings Monster File
 
 How do you get started with modules in Node? Simple. All you need to do is use `require` for importing from a main file, and `module.exports` for exporting in the module.
 
