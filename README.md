@@ -151,7 +151,8 @@ This pattern is very similar to how in the browsers we use `window.jQuery = ...`
 1. [Modules official documentation](https://nodejs.org/api/modules.html)
 1. [Node.js, Require and Exports](http://openmymind.net/2012/2/3/Node-Require-and-Exports)
 1. [How To Create and Use Node.js Modules video](https://www.youtube.com/watch?v=DZ_bRk8JWDM)
-2. [Node.js Modules video](https://www.youtube.com/watch?v=98nlQYgXZGw)
+1. [Node.js Modules video](https://www.youtube.com/watch?v=98nlQYgXZGw)
+1. [Useful phrases in Tatar](http://www.omniglot.com/language/phrases/tatar.php)
 
 
 ---
