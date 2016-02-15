@@ -133,16 +133,18 @@ Now go back to the module example and add some code outside of the `module.expor
 
 In other words, when you import a Node/JavaScript file, Node will execute the code outside of the `module.exports`, but not the `module.exports` code. The `module.exports` needs to be invoked explicitly (if it's a function... it could be an object too). 
 
-Knowing this will help you to add some logic that needs to be executed no matter what or some logic which overwrites a `global` property. For example, this module will make console.logs red as soon as we import it, but it doesn't even have `module.exports`!:
+Knowing this will help you to add some logic that needs to be executed no matter what or some logic which overwrites a `global` property. For example, this module will make console.logs red as soon as we import it, but it doesn't even have `module.exports`!
 
 ```js
 _log = global.console.log
 global.console.log = function(){
   var args = arguments
-  args[0] = require('chalk').bold.red('\033[31m' +args[0] + '\x1b[0m')
+  args[0] = '\033[31m' +args[0] + '\x1b[0m'
   return _log.apply(null, args)
 }
 ```
+
+This pattern is very similar to how in the browsers we use `window.jQuery = ...` to export logic. Typically, we don't recommend using `global`. Use `module.exports` instead, because it's safer. You have fewer chances of overwriting something important to cause a conflict.
 
 ## Resources
 
