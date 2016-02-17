@@ -15,9 +15,9 @@ By writing modular code, you can avoid this problem. This lesson will cover how 
 
 ## Modules
 
-Modules are distinct chunks of logic typically grouped together based on their functionality. For example, if you are building a date picker, you might want to abstract (separate into a module) your date picker logic into a separate component/package/module, because the chances are very high that you'll need more than one date input field: date of birth, date of expiration on a credit/debit card, date of delivery, etc.
+Modules are distinct chunks of logic typically grouped together based on their functionality. For example, if you are building a date picker, you might want to abstract your date picker logic into a separate component/package/module, because the chances are very high that you'll need more than one date input field: date of birth, date of expiration on a credit/debit card, date of delivery, etc.
 
-Writing modular code is the best practice because the more you can re-use the old code from other parts of the application in a new features and places, the better the overall project will be. There is one tiny problem with browser JavaScript. Ist doesn't have built-in modules! That is insane if you think about it. Developers have to use HTML which is another language to include browser JavaScript files. But even then, the dependency management is awful and the `<script>` tags are often blocking the loading of other resources (they are synchronous).
+Writing modular code is the best practice because the more you can re-use the old code from other parts of the application in a new features and places, the better the overall project will be. There is one tiny problem with browser JavaScript. It doesn't have built-in modules! That is insane if you think about it. Developers have to use HTML which is another language to include browser JavaScript files. But even then, the dependency management is awful and the `<script>` tags are often blocking the loading of other resources (they are synchronous).
 
 Ingenuity of the JavaScript community led to the invention of various JavaScript-only approaches to modules such as CommonJS, RequireJS, and AMD. Under the hood, these standards and libraries used AJAX (Asynchronous JavaScript and XML) or XHR to fetch other JavaScript libraries/modules. Not ideal, but works better than having to manage 100s of `<script>` tags.
 
@@ -52,7 +52,9 @@ Tatar Isänmesez & English Hello
 
 So far so good? What if you need to re-use the same hellos in multiple places? Let's abstract that portion into `greetings.js` (module) and `hello.js` (main file).
 
-Move the code for the `sayHelloInEnglish` and `sayHelloInTatar` to `greetings.js`. In that file, you'll need to export the logic.
+Move the code for the functions `sayHelloInEnglish` and `sayHelloInTatar` to `greetings.js`.
+
+You'll also want to add the `console.log` portion of `hello-monolithic.js` into `hello.js`
 
 ## Exporting
 
@@ -77,7 +79,7 @@ module.exports = function() {...}
 ```
 
 
-So the code for the `greetings.js` module  uses `module.exports`:
+So the code for the `greetings.js` module  uses `module.exports`. Make sure your code in `greetings.js` exports the functions:
 
 ```
 module.exports.sayHelloInEnglish = function() {
@@ -101,7 +103,9 @@ var module = require('module')
 
 The value of `module.exports` (in the module) will be returned and assigned to the `module` variable (in the main file). The name can be anything but typically it closely resembles the module names.
 
-Back to our greetings. We have the module. Then, in the main file `hello.js`, we import the `greetings.js` with require. Then we invoke the methods like any other functions:
+Back to our greetings. We have the module. Then, in the main file `hello.js`, we import the `greetings.js` with require. Then we invoke the methods like any other functions.
+
+Make sure you import `greetings.js` into `hello.js`. Be careful how you call the functions!
 
 ```js
 var greetings = require('./greetings.js')
@@ -122,7 +126,7 @@ We've showed you how to import a Node (.js) file. Conveniently, you can import m
 * JSON file, e.g., `require('./configs.jsoin')`
 * Folder (really an `index.js` inside of the folder), e.g., `require('./routes')`
 
-You've seen how to import a file in the greetings example, but what about npm and core modules? You just use the name of the module, e.g., for `chai` use `require('chai')` and for `fs` use `require('fs')`. The difference between core and npm modules is that you need to install the latter with `$ npm install NAME`.
+You've seen how to import a file in the greetings example, but what about npm and core modules? You just use the name of the module, e.g., for `chai` use `require('chai')` and for `fs` use `require('fs')`. The difference between core and npm modules is that you need to install the latter with `npm install NAME`.
 
 
 When importing JSON files, you'll get JavaScript/Node object which is convenient. And importing a folder acts as another abstraction. For example, you have 20 utilities files, instead of requiring all 20 in each file, you just include the folder (really an `index.js` which in turn requires and exports the 20 files).
