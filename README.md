@@ -52,9 +52,7 @@ Tatar Isänmesez & English Hello
 
 So far so good? What if you need to re-use the same hellos in multiple places? Let's abstract that portion into `greetings.js` (module) and `hello.js` (main file).
 
-Move the code for the functions `sayHelloInEnglish` and `sayHelloInTatar` to `greetings.js`.
-
-You'll also want to add the `console.log` portion of `hello-monolithic.js` into `hello.js`
+You can do so by moving the code for the functions `sayHelloInEnglish` and `sayHelloInTatar` to `greetings.js`. You'll also want to add the `console.log` portion of `hello-monolithic.js` into `hello.js`
 
 ## Exporting
 
@@ -133,11 +131,11 @@ When importing JSON files, you'll get JavaScript/Node object which is convenient
 
 ## How Import/Export Works
 
-Now go back to the module example and add some code outside of the `module.exports`. It will run as soon as we import the module. It will run even if we never invoke any of the greetings. 
+Now go back to the our module, i.e., `greetings.js`, and add some code outside of the `module.exports`. It will run as soon as we import the module. It will run even if we never invoke any of the greetings. 
 
 In other words, when you import a Node/JavaScript file, Node will execute the code outside of the `module.exports`, but not the `module.exports` code. The `module.exports` needs to be invoked explicitly (if it's a function... it could be an object too). 
 
-Knowing this will help you to add some logic that needs to be executed no matter what or some logic which overwrites a `global` property. For example, this module will make console.logs red as soon as we import it, but it doesn't even have `module.exports`!
+Knowing this will help you to add some logic that needs to be executed no matter what or some logic which overwrites a `global` property. For example, this module will make console.logs red as soon as we import it, but it doesn't even have `module.exports`! 
 
 ```js
 _log = global.console.log
@@ -148,7 +146,9 @@ global.console.log = function(){
 }
 ```
 
-This pattern is very similar to how in the browsers we use `window.jQuery = ...` to export logic. Typically, we don't recommend using `global`. Use `module.exports` instead, because it's safer. You have fewer chances of overwriting something important to cause a conflict.
+The code above is in the file `redlog.js`, and we require it in `redlog-main.js`.
+
+This `global` pattern is very similar to how in the browsers we use `window.jQuery = ...` to export logic. Typically, we don't recommend using `global`. Use `module.exports` instead, because it's safer. You have fewer chances of overwriting something important to cause a conflict.
 
 ## Resources
 
