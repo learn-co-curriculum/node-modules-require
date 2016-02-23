@@ -93,7 +93,7 @@ But how we use the module in the main file? We need to import the functionality!
 
 ## Importing
 
-So we have the code neatly organized into separate folder and files for re-use and better development scalability, but how can we use those files from other files (I call the importee or main files)? We use `require()` which is another global method:
+So we have the code neatly organized into separate folder and files for re-use and better development scalability, but how can we use those files from other files (the main files)? We use `require()` which is another global method:
 
 ```js
 var module = require('module')
